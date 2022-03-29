@@ -1,0 +1,20 @@
+.space {
+    padding-top: 50px;
+}
+.exp-text{
+    text-align: center;
+    color: #fff;
+    font-size: 3rem;
+    text-transform: uppercase;
+}
+.col-md-5 .exp-text{
+    border: 2px solid var(--main-color);
+    padding: 10px;
+}
+
+.li-text{
+    color:#ccc;
+    font-weight: lighter;
+    font-size: 1.6rem;
+    line-height: 45px;
+}
