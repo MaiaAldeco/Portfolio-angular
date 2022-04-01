@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ServiceScrollrevealService } from '../service-scrollreveal.service';
 
 @Component({
   selector: 'app-projects',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private scrollreveal:ServiceScrollrevealService){
+    
+  }
+
+  config1reveal = this.scrollreveal.config1reveal
 
   ngOnInit(): void {
   }

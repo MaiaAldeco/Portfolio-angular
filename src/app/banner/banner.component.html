@@ -1,11 +1,7 @@
-<section class="home" id="home">
+<section class="home" id="home" ngsReveal>
     <div class="content">
-        <h3>MAIA NATALÍ ALDECO <br>
-            Full Stack <span class="typed"></span> Developer</h3>
-        <div id="typed-cadena">
-            <p>Java</p>
-            <p>Node.js</p>
-        </div>
+        <ngx-typed-js [strings]="['Java', 'Node.js']" [shuffle]="false" [typeSpeed]="100" [startDelay]="400" [backSpeed]="100" [smartBackspace]="true" [backDelay]="1600" [loop]="true" [showCursor]="false">
+            <h3>MAIA NATALÍ ALDECO <br> Full Stack <span class="typing typed"></span> Developer</h3> 
+          </ngx-typed-js>
     </div>
-
 </section>
