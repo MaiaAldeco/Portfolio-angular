@@ -3,6 +3,7 @@ import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { faPhone } from '@fortawesome/free-solid-svg-icons';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { ServiceScrollrevealService } from '../service-scrollreveal.service';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -15,6 +16,7 @@ export class ContactComponent implements OnInit {
   faLocationDot = faLocationDot;
   faPhone = faPhone;
   faPaperPlane = faPaperPlane;
+  faPenToSquare = faPenToSquare;
 
   constructor(private scrollreveal:ServiceScrollrevealService){
     

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceScrollrevealService } from '../service-scrollreveal.service';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-skills',
@@ -7,6 +8,8 @@ import { ServiceScrollrevealService } from '../service-scrollreveal.service';
   styleUrls: ['./skills.component.css']
 })
 export class SkillsComponent implements OnInit {
+
+  faPenToSquare = faPenToSquare;
 
   constructor(private scrollreveal:ServiceScrollrevealService){
     
