@@ -16,6 +16,7 @@ import { ContactComponent } from './contact/contact.component';
 import { FooterComponent } from './footer/footer.component';
 import { NgxTypedJsModule } from 'ngx-typed-js';
 import { ServiceScrollrevealService } from './service-scrollreveal.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 /* import { RouterModule, Routes } from '@angular/router'; */
 
 /* const appRoutes: Routes=[
