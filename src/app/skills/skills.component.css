@@ -15,17 +15,59 @@
     border-radius: 10px;
     overflow: visible;
     display: flex;
-    
+
 }
-.progress .progress-bar{
+
+.progress .progress-bar {
     border-radius: 10px;
 }
-.progress-bar.active{
+
+.progress-bar.active {
     animation: reverse progress-bar-stripes 0.40s linear infinite, animate-positive 3s;
 }
-@-webkit-keyframes animate-positive{
-    0% { width: 0%; }
+
+@-webkit-keyframes animate-positive {
+    0% {
+        width: 0%;
+    }
 }
+
 @keyframes animate-positive {
-    0% { width: 0%; }
+    0% {
+        width: 0%;
+    }
+}
+
+.btnContent {
+
+    margin-top: 1rem;
+    display: inline-block;
+    padding: 0.9rem 3rem;
+    font-size: 1rem;
+    color: #fff;
+    background: var(--main-color);
+    cursor: pointer;
+}
+
+.btnContent:hover {
+    letter-spacing: .2rem;
+}
+
+.border {
+    padding: 10px;
+}
+
+.btn {
+    margin-right: 10px;
+    color: #fff;
+    margin-bottom: 15px;
+    margin-left: 10px;
+}
+
+.fa {
+    margin-right: 10px;
+}
+
+.icons{
+    margin-left: 5px;
 }

@@ -23,7 +23,7 @@ p.card-text{
     color: #ccc;
 }
 
-.btn {
+.btnContent {
     margin-top: 1rem;
     display: inline-block;
     padding: 0.9rem 3rem;
@@ -33,7 +33,7 @@ p.card-text{
     cursor: pointer;
 
 }
-.btn:hover{
+.btnContent:hover{
     letter-spacing: .2rem;
 }
 
@@ -66,4 +66,15 @@ p.card-text{
 
 .card-img-top:hover{
     transform: scale(1.02);
+}
+
+.border {
+    padding: 10px;
+}
+
+.btn {
+    margin-right: 10px;
+    color: #fff;
+    margin-bottom: 10px;
+    margin-left: 5px;
 }
