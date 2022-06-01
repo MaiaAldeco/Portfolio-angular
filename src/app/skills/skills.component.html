@@ -1,8 +1,8 @@
 <app-navbar></app-navbar>
-<section id="skills" [ngsReveal]="config1reveal">
-    <div class="space">
+<section id="skills"  [ngsReveal]="config1reveal">
+    <div class="space mt-md-4 py-5">
         <h1 class="heading">MIS <span>habilidades</span></h1>
-        <button class="btn btn-md btn-outline-primary" (click)="open(content)">
+        <button *ngIf="isLogged && isAdmin" class="btn btn-md btn-outline-primary" (click)="open(content)">
             <fa-icon [icon]="faUser" transform="shrink-0 left-4"></fa-icon>New Skill
         </button>
     </div>
@@ -11,11 +11,11 @@
             <div class="col-md-12">
                 <h3 class="progress-title">{{skill.habilidad}}</h3>
                 <div class="icons">
-                    <fa-icon (click)="openDetails(contentDetails, skill)" style="color:#0DCAF0; cursor:pointer"
+                    <fa-icon *ngIf="isLogged" (click)="openDetails(contentDetails, skill)" style="color:#0DCAF0; cursor:pointer"
                     [icon]="faSearch" class="fa-lg fa-fw" transform="shrink-0 left-4"></fa-icon>
-                    <fa-icon (click)="openEdit(contentEdit, skill)" style="color:#F5B907; cursor:pointer"
+                    <fa-icon *ngIf="isLogged && isAdmin" (click)="openEdit(contentEdit, skill)" style="color:#F5B907; cursor:pointer"
                     [icon]="faPenToSquare" class="fa-lg fa-fw"></fa-icon>
-                    <fa-icon (click)="openDelete(contentDelete, skill)" style="color:#C02E3C; cursor:pointer" [icon]="faTrash"
+                    <fa-icon *ngIf="isLogged && isAdmin" (click)="openDelete(contentDelete, skill)" style="color:#C02E3C; cursor:pointer" [icon]="faTrash"
                     transform="shrink-0 right-4" class="fa-lg"></fa-icon>
                 </div>
                 <div class="progress">

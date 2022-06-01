@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LoginUsuario } from '../models/login-usuario';
 import { AuthService } from '../service/auth.service';
 import { TokenService } from '../service/token.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -11,52 +12,40 @@ import { TokenService } from '../service/token.service';
 })
 export class LoginComponent implements OnInit {
 
-  isLogged = false;
-  isLoginFail = false;
   loginUsuario: LoginUsuario;
   nombreUsuario: string;
   password: string;
-  roles:string[];
-  errorMsj:string;
+  errorMsj: string;
 
-  constructor(private tokenService:TokenService,
-    private authService:AuthService,
-    private router:Router) { }
+  constructor(private tokenService: TokenService,
+    private authService: AuthService,
+    private toastr: ToastrService,
+    private router: Router) { }
 
   ngOnInit(): void {
-    //COMPRUEBA SI ESTAMOS LOGGEADOS
-    if(this.tokenService.getToken()){
-      this.isLogged = true;
-      this.isLoginFail = false;
-      this.roles = this.tokenService.getAuthorities();
-    }
   }
 
-  onLogin():void{
+  onLogin(): void {
     this.loginUsuario = new LoginUsuario(this.nombreUsuario, this.password);
     this.authService.login(this.loginUsuario).subscribe({
       next: (v) => {
-        this.isLogged = true;
-        this.isLoginFail = false;
-
-        this.tokenService.setToken(v.token);
-        this.tokenService.setUsername(v.nombreUsuario);
-        this.tokenService.setAthorities(v.authorities);
-        this.roles = v.authorities;
-        this.router.navigate(['/menu']);
+        this.tokenService.setToken(v.token);   
+        this.toastr.success(this.errorMsj, 'Bienvenido ' + this.tokenService.getUsername(), {
+          timeOut: 3000, positionClass: 'toast-top-center'
+        })
+        this.router.navigate(['/']);
       },
       error: (e) => {
-        console.log(e.error.message);
+        console.log(e)
         this.errorMsj = e.error.message;
-        this.isLogged = false;
-        this.isLoginFail = true;
+        this.toastr.error(this.errorMsj, 'FAIL', {
+          timeOut: 3000, positionClass: 'toast-top-center'
+        })
       }
     })
   }
 
-  onLogOut(): void{
+  onLogOut(): void {
     this.tokenService.logOut();
-    window.location.reload();
-    this.router.navigate(['/login'])
   }
 }

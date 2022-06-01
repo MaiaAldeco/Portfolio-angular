@@ -1,100 +1,36 @@
-<nav class="navbar navbar-expand-lg navbar-dark ">
-    <div class="container-fluid">
-        <a class="navbar-brand"><img
-                src="https://aonyi.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F9d6bc111-5f99-4aed-96af-1052055ccbbd%2FArgentinaPrograma_(2).png?table=collection&id=8fe8f002-6a9d-4788-b2d3-414d192c644e&spaceId=2787d980-f6c1-4fb9-9274-23694d6120b3&width=40&userId=&cache=v2"
-                alt="Full Stack Developer" width="35" class="d-inline-block align-text-top">
-            Argentina Programa</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse mx-auto" id="navbarSupportedContent">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item ">
-                    <a class="nav-link about" routerLink="/menu">Portfolio </a>
-                </li>
+<app-navbar></app-navbar>
 
-            </ul>
-            <div>
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" target="_blank" href="https://www.facebook.com">
-                            <img class="icono"
-                                src="https://cdn1.iconfinder.com/data/icons/logotypes/32/square-facebook-256.png"
-                                alt="Facebook" width="30">
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" target="_blank" href="https://www.instagram.com/mai.ldco">
-                            <img class="icono"
-                                src="https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Instagram-256.png"
-                                alt="Instagram" width="30">
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" target="_blank" href="#">
-                            <img class="icono"
-                                src="https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Linkedin_unofficial_colored_svg-256.png"
-                                alt="Linkedin" width="30">
-                        </a>
-                    </li>
-                    <li class="nav-item" *ngIf="!isLogged">
-                        <a class="nav-link" routerLink="/login">
-                            <img class="icono"
-                                src="https://cdn1.iconfinder.com/data/icons/unicons-line-vol-5/24/sign-in-alt-512.png"
-                                alt="signin" width="30">
-                        </a>
-                    </li>
-                    <li class="nav-item" *ngIf="isLogged" (click)="onLogOut()">
-                        <a class="nav-link">
-                            <img class="icono"
-                                src="https://cdn1.iconfinder.com/data/icons/unicons-line-vol-5/24/sign-out-alt-256.png"
-                                alt="signout" width="30">
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</nav>
-
-
-<div>
-    <section>
-        <div class="container py-5 ">
-            <div class="row d-flex justify-content-center align-items-center ">
-                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                    <div class="card bg-dark text-white" style="border-radius: 1rem;">
-                        <div class="card-body p-5 text-center">
-
-                            <div class="mb-md-5 mt-md-4 pb-5">
-
-                                <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-                                <p class="text-white-50 mb-5">Ingresa tus datos para iniciar sesión</p>
-                                <form #f="ngForm" (ngSubmit)="onLogin()" novalidate>
-                                    <div class="form-outline form-white mb-4">
-                                        <input type="text" name="nombreUsuario" id="nombreUsuario" class="form-control form-control-lg" [(ngModel)]="nombreUsuario" required>
-                                        <label class="form-label" for="nombreUsuario">Nombre Usuario</label>
-                                    </div>
-
-                                    <div class="form-outline form-white mb-4">
-                                        <input type="password" name="password" id="password"
-                                            class="form-control form-control-lg" [(ngModel)]="password" required>
-                                        <label class="form-label" for="password">Contraseña</label>
-                                    </div>
-                                    <button class="btn btn-outline-light btn-lg px-5" [disabled]="!f.valid" type="submit">Iniciar Sesión</button>
-                                </form>
-                                <div *ngIf="f.submitted && isLoginFail" class="alert alert-danger mt-3">Fail en login: {{errorMsj}}</div>
-                            </div>
-                            <div>
-                                <p class="mb-0">No tienes una cuenta? <a routerLink="/registro"
-                                        class="text-white-50 fw-bold">Registrate</a></p>
-                            </div>
+<section>
+    <div class="container">
+        <div class="row d-flex py-5 mt-md-5 justify-content-center align-items-center ">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+                        <div class="mb-md-5 mt-md-4 pb-5">
+                            <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+                            <p class="text-white-50 mb-5">Ingresa tus datos para iniciar sesión</p>
+                            <form #f="ngForm" (ngSubmit)="onLogin()" novalidate>
+                                <div class="form-outline form-white mb-4">
+                                    <label class="form-label" for="nombreUsuario">Nombre Usuario</label>
+                                    <input type="text" name="nombreUsuario" id="nombreUsuario"
+                                        class="form-control form-control-lg" [(ngModel)]="nombreUsuario" required>
+                                </div>
+                                <div class="form-outline form-white mb-4">
+                                    <label class="form-label" for="password">Contraseña</label>
+                                    <input type="password" name="password" id="password"
+                                        class="form-control form-control-lg" [(ngModel)]="password" required>
+                                </div>
+                                <button class="btn btn-outline-light btn-lg px-5" [disabled]="!f.valid"
+                                    type="submit">Iniciar Sesión</button>
+                            </form>
+                        </div>
+                        <div>
+                            <p class="mb-0">No tienes una cuenta? <a routerLink="/registro"
+                                    class="text-white-50 fw-bold">Registrate</a></p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-</div>
+    </div>
+</section>

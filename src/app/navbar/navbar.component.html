@@ -16,9 +16,6 @@
                     <a class="nav-link about" routerLink="/">Home</a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link about" routerLink="/about">About me </a>
-                </li>
-                <li class="nav-item ">
                     <a class="nav-link experience" routerLink="/experience">Experience</a>
                 </li>
                 <li class="nav-item">
@@ -62,7 +59,7 @@
                         </a>
                     </li>
                     <li class="nav-item" *ngIf="isLogged" (click)="onLogOut()">
-                        <a class="nav-link">
+                        <a class="nav-link" style="cursor:pointer">
                             <img class="icono"
                                 src="https://cdn1.iconfinder.com/data/icons/unicons-line-vol-5/24/sign-out-alt-256.png"
                                 alt="signout" width="30">

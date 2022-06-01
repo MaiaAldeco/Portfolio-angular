@@ -7,6 +7,7 @@ import { ContactService } from '../service/contact-service.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
+import { TokenService } from '../service/token.service';
 
 @Component({
   selector: 'app-contact',
@@ -25,12 +26,15 @@ export class ContactComponent implements OnInit {
   closeResult: string;
   contactos: Contact[];
   editForm: FormGroup;
+  isAdmin = false;
+  isLogged = false;
 
-  constructor(private scrollreveal: ServiceScrollrevealService, 
-    private modalService: NgbModal, 
+  constructor(private scrollreveal: ServiceScrollrevealService,
+    private modalService: NgbModal,
     private contactoService: ContactService,
     private toastr: ToastrService,
-    private formBuilder: FormBuilder) {}
+    private tokenService: TokenService,
+    private formBuilder: FormBuilder) { }
 
   config1reveal = this.scrollreveal.config1reveal
 
@@ -42,6 +46,10 @@ export class ContactComponent implements OnInit {
       telefono: [''],
       email: ['']
     });
+    //verifica que estemos loggeados
+    this.isLogged = this.tokenService.isLogged();
+    //obtiene el rol
+    this.isAdmin = this.tokenService.isAdmin();
   }
 
   //lista
@@ -63,49 +71,35 @@ export class ContactComponent implements OnInit {
     document.getElementById('emailContact').setAttribute('value', contact.email);
   }
 
-    //vista edit
-    openEdit(targetModal, contact: Contact) {
-      this.modalService.open(targetModal, {
-        centered: true,
-        backdrop: 'static',
-        size: 'lg'
-      });
-      this.editForm.patchValue({
-        id: contact.id,
-        localidad: contact.localidad,
-        telefono: contact.telefono,
-        email: contact.email
-      });
-    }
-  
+  //vista edit
+  openEdit(targetModal, contact: Contact) {
+    this.modalService.open(targetModal, {
+      centered: true,
+      backdrop: 'static',
+      size: 'lg'
+    });
+    this.editForm.patchValue({
+      id: contact.id,
+      localidad: contact.localidad,
+      telefono: contact.telefono,
+      email: contact.email
+    });
+  }
+
   //update
   onSave() {
     this.contactoService.update(this.editForm.value.id, this.editForm.value).subscribe({
       next: (v) => {
+        this.ngOnInit();
         this.toastr.success('Persona actualizada', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
-        }); this.ngOnInit()
+        });
       },
       complete: () => this.modalService.dismissAll(),
       error: (e) => this.toastr.error(e.error.mensaje, 'FAIL', {
         timeOut: 3000, positionClass: 'toast-top-center'
       })
 
-    })
-  }
-
-  //new
-  onSubmit(f: NgForm) {
-    this.contactoService.save(f.value).subscribe({
-      next: (v) => {
-        this.toastr.success('Persona creada', 'OK', {
-          timeOut: 3000, positionClass: 'toast-top-center'
-        }); this.ngOnInit()
-      },
-      complete: () => this.modalService.dismissAll(),
-      error: (e) => this.toastr.error(e.error.mensaje, 'FAIL', {
-        timeOut: 3000, positionClass: 'toast-top-center'
-      })
     })
   }
 

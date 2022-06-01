@@ -1,28 +1,27 @@
 <app-navbar></app-navbar>
 <section class="menu" id="projects" [ngsReveal]="config1reveal">
-    <h1 class="heading "> <span>trabajos</span> realizados </h1>
-    <button class="btn btn-md btn-outline-primary" (click)="open(content)">
+    <h1 class="heading mt-md-4 py-5"> <span>trabajos</span> realizados </h1>
+    <button *ngIf="isLogged && isAdmin" class="btn btn-md btn-outline-primary" (click)="open(content)">
         <fa-icon [icon]="faUser" transform="shrink-0 left-4"></fa-icon>New Skill
     </button>
-    <div class="box-container">
+    <div class="box-container ">
         <div class="row  row-cols-1 row-cols-md-3 g-4 ">
             <div class="col  " *ngFor="let trabajo of trabajos">
                 <div class="card ">
-                    <img src="img/asd.jpg" class="card-img-top img-fluid " alt="...">
+                    <img src="{{trabajo.imagen}}" class="card-img-top img-fluid " alt="...">
                 </div>
                 <div class="card-body box">
                     <div class="icons">
-                        <fa-icon (click)="openDetails(contentDetails, trabajo)" style="color:#0DCAF0; cursor:pointer"
+                        <fa-icon *ngIf="isLogged" (click)="openDetails(contentDetails, trabajo)" style="color:#0DCAF0; cursor:pointer"
                         [icon]="faSearch" class="fa-sm fa-fw" transform="shrink-0 left-4"></fa-icon>
-                        <fa-icon (click)="openEdit(contentEdit, trabajo)" style="color:#F5B907; cursor:pointer"
+                        <fa-icon *ngIf="isLogged && isAdmin" (click)="openEdit(contentEdit, trabajo)" style="color:#F5B907; cursor:pointer"
                         [icon]="faPenToSquare" class="fa-sm fa-fw"></fa-icon>
-                        <fa-icon (click)="openDelete(contentDelete, trabajo)" style="color:#C02E3C; cursor:pointer" [icon]="faTrash"
+                        <fa-icon *ngIf="isLogged && isAdmin" (click)="openDelete(contentDelete, trabajo)" style="color:#C02E3C; cursor:pointer" [icon]="faTrash"
                         transform="shrink-0 right-4" class="fa-sm"></fa-icon>
                     </div>
                     <h5 class="card-title">{{trabajo.titulo}}</h5>
                     <p class="card-text">{{trabajo.descripcion}}?</p>
-                    <button class="btnContent">View</button>
-<!--                     <a href="#" class="btnContent">View</a> -->
+                    <a href="{{trabajo.linkTrabajo}}" class="btnContent">View</a>
                 </div>
             </div>
         </div>
@@ -47,9 +46,17 @@
                 <div class="input-group">
                     <input id="descripcion" name="descripcion" class="form-control" required ngModel>
                 </div>
+                <label for="linkTrabajo">Link</label>
+                <div class="input-group">
+                    <input id="linkTrabajo" name="linkTrabajo" class="form-control" required ngModel>
+                </div>
+                <label for="imagen">Imagen</label>
+                <div class="input-group">
+                    <input id="imagen" name="imagen" class="form-control" required ngModel>
+                </div>
             </div>
             <div class="border text-center">
-                <button data-dismiss="modal" class="btnContent">Submit</button>
+                <button data-dismiss="modal" class="btnContent">Guardar</button>
             </div>
         </form>
     </div>
@@ -77,6 +84,18 @@
                 <label>Descripción</label>
                 <div class="input-group">
                     <input id="descProyect" name="descProyect" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Link</label>
+                    <div class="input-group">
+                        <input id="linkTrabajo" name="linkTrabajo" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Imagen</label>
+                    <div class="input-group">
+                        <input id="imagen" name="imagen" class="form-control" readonly>
+                    </div>
                 </div>
             </div>
         </form>
@@ -108,7 +127,16 @@
                 <div class="input-group">
                     <input type="text" formControlName="descripcion" class="form-control" required>
                 </div>
+                <label for="linkTrabajo">Link</label>
+                <div class="input-group">
+                    <input type="text" formControlName="linkTrabajo" class="form-control" required>
+                </div>
+                <label for="imagen">Imagen</label>
+                <div class="input-group">
+                    <input type="text" formControlName="imagen" class="form-control" required>
+                </div>
             </div>
+            
             <div class="border text-center">
                 <button (click)="onSave()" data-dismiss="modal" class="btnContent">Guardar</button>
             </div>

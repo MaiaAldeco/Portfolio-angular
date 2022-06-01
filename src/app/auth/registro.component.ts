@@ -18,7 +18,6 @@ export class RegistroComponent implements OnInit {
   email: string;
   password: string;
   errorMsj: string;
-  isLogged = false;
   isRegister = false;
   isRegisterFail = false;
 
@@ -28,9 +27,6 @@ export class RegistroComponent implements OnInit {
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    if (this.tokenService.getToken()) {
-      this.isLogged = true;
-    }
   }
 
   onRegister(): void {
@@ -52,8 +48,6 @@ export class RegistroComponent implements OnInit {
 
   onLogOut(): void{
     this.tokenService.logOut();
-    window.location.reload();
-    this.router.navigate(['/login'])
   }
 }
 

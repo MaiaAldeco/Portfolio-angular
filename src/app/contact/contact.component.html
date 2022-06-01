@@ -4,14 +4,11 @@
         <div class="row justify-content-center">
             <div class="col-md-6 text-center mb-5">
                 <h2 class="heading-section ">Contáctame</h2>
-                <button class="btn btn-md btn-outline-primary" (click)="open(content)">
-                    <fa-icon [icon]="faUser" transform="shrink-0 left-4"></fa-icon>New Contact
-                </button>
                 <div *ngFor="let contacto of contactos">
-                    <button (click)="openDetails(contentDetails, contacto)" class="btn btn-md btn-info">
+                    <button *ngIf="isLogged" (click)="openDetails(contentDetails, contacto)" class="btn btn-md btn-info">
                         <fa-icon [icon]="faSearch" transform="shrink-0 left-4"></fa-icon>Details
                     </button>
-                    <button (click)="openEdit(contentEdit, contacto)" class="btn btn-md btn-warning">
+                    <button *ngIf="isLogged && isAdmin" (click)="openEdit(contentEdit, contacto)" class="btn btn-md btn-warning">
                         <fa-icon [icon]="faPenToSquare" transform="shrink-0 left-4"></fa-icon>Edit
                     </button>
                 </div>
@@ -108,39 +105,7 @@
     </div>
 </section>
 
-<!-- ---------------------------------------- ADD NEW --------------------------------------------------- -->
-<ng-template #content let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Nuevo Contacto</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
-            <div class="form-group">
-                <label for="localidad">Localidad</label>
-                <div class="input-group">
-                    <input type="text" id="localidad" name="localidad" class="form-control" required ngModel>
-                </div>
-                <label for="telefono">Teléfono</label>
-                <div class="input-group">
-                    <input type="text" id="telefono" name="telefono" class="form-control" required ngModel>
-                </div>
-                <label for="email">Email</label>
-                <div class="input-group">
-                    <input type="text" id="email" name="email" class="form-control" required ngModel>
-                </div>
-            </div>
-            <div class="border text-center">
-                <button data-dismiss="modal" class="btnEdit">Submit</button>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Close</button>
-    </div>
-</ng-template>
+
 <!-- ---------------------------------------- DETAILS --------------------------------------------------- -->
 <ng-template #contentDetails let-modal>
     <div class="modal-header">

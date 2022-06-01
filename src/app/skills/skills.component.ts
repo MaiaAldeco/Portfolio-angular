@@ -6,6 +6,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { faPenToSquare, faTrash, faUser, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
+import { TokenService } from '../service/token.service';
 
 @Component({
   selector: 'app-skills',
@@ -22,6 +23,8 @@ export class SkillsComponent implements OnInit {
   skills: Skills[];
   editForm: FormGroup;
   deleteId: number;
+  isAdmin = false;
+  isLogged = false;
 
 
   barrs(numero: number) {
@@ -32,6 +35,7 @@ export class SkillsComponent implements OnInit {
     private modalService: NgbModal,
     private skillService: SkillsServiceService,
     private toastr: ToastrService,
+    private tokenService: TokenService,
     private formBuilder: FormBuilder) { }
 
   config1reveal = this.scrollreveal.config1reveal
@@ -43,6 +47,10 @@ export class SkillsComponent implements OnInit {
       habilidad: [''],
       porcentaje: ['']
     });
+    //verifica que estemos loggeados
+    this.isLogged = this.tokenService.isLogged()
+    //obtiene el rol
+    this.isAdmin = this.tokenService.isAdmin();
   }
 
   //lista
@@ -67,9 +75,10 @@ export class SkillsComponent implements OnInit {
   onSubmit(f: NgForm) {
     this.skillService.save(f.value).subscribe({
       next: (v) => {
+        this.ngOnInit();
         this.toastr.success('Habilidad creada', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
-        }); this.ngOnInit()
+        }); 
       },
       complete: () => this.modalService.dismissAll(),
       error: (e) => this.toastr.error(e.error.mensaje, 'FAIL', {
@@ -96,9 +105,10 @@ export class SkillsComponent implements OnInit {
   onSave() {
     this.skillService.update(this.editForm.value.id, this.editForm.value).subscribe({
       next: (v) => {
+        this.ngOnInit();
         this.toastr.success('Habilidad actualizada', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
-        }); this.ngOnInit()
+        }); 
       },
       complete: () => this.modalService.dismissAll(),
       error: (e) => this.toastr.error(e.error.mensaje, 'FAIL', {

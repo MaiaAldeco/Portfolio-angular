@@ -8,6 +8,7 @@ import { EducationServiceService } from '../service/education-service.service';
 import { ExperienceServiceService } from '../service/experience-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
+import { TokenService } from '../service/token.service';
 
 @Component({
   selector: 'app-experience',
@@ -27,11 +28,14 @@ export class ExperienceComponent implements OnInit {
   editFormExp: FormGroup;
   deleteExpId: number;
   deleteStudyId: number;
+  isAdmin = false;
+  isLogged = false;
 
   constructor(private scrollreveal: ServiceScrollrevealService,
     private modalService: NgbModal,
     private expService: ExperienceServiceService,
     private estudioService: EducationServiceService,
+    private tokenService: TokenService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder) { }
 
@@ -55,6 +59,10 @@ export class ExperienceComponent implements OnInit {
       fechaInicio: [''],
       fechaFin: ['']
     });
+    //verifica que estemos loggeados
+    this.isLogged = this.tokenService.isLogged();
+    //obtiene el rol
+    this.isAdmin = this.tokenService.isAdmin();
   }
 
   /*-------------------- EXPERIENCE ---------------------*/
@@ -84,9 +92,10 @@ export class ExperienceComponent implements OnInit {
   onSubmitExperiencia(f: NgForm) {
     this.expService.save(f.value).subscribe({
       next: (v) => {
+        this.ngOnInit();
         this.toastr.success('Experiencia creada', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
-        }); this.ngOnInit()
+        }); 
       },
       complete: () => this.modalService.dismissAll(),
       error: (e) => this.toastr.error(e.error.mensaje, 'FAIL', {
@@ -114,9 +123,10 @@ export class ExperienceComponent implements OnInit {
   onSaveExperience() {
     this.expService.update(this.editFormExp.value.id, this.editFormExp.value).subscribe({
       next: (v) => {
+        this.ngOnInit();
         this.toastr.success('Experiencia actualizada', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
-        }); this.ngOnInit()
+        }); 
       },
       complete: () => this.modalService.dismissAll(),
       error: (e) => this.toastr.error(e.error.mensaje, 'FAIL', {
@@ -183,14 +193,17 @@ export class ExperienceComponent implements OnInit {
   onSaveEstudio() {
     this.estudioService.update(this.editFormStudy.value.id, this.editFormStudy.value).subscribe({
       next: (v) => {
+        this.ngOnInit()
         this.toastr.success('Estudio actualizada', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
-        }); this.ngOnInit()
+        }); 
       },
       complete: () => this.modalService.dismissAll(),
-      error: (e) => {this.toastr.error(e.error.mensaje, 'FAIL', {
-        timeOut: 3000, positionClass: 'toast-top-center'
-      }), console.log(e.error.error.mensaje)}
+      error: (e) => {
+        this.toastr.error(e.error.mensaje, 'FAIL', {
+          timeOut: 3000, positionClass: 'toast-top-center'
+        }), console.log(e.error.error.mensaje)
+      }
 
     })
   }
@@ -198,9 +211,10 @@ export class ExperienceComponent implements OnInit {
   onSubmitEstudio(f: NgForm) {
     this.estudioService.save(f.value).subscribe({
       next: (v) => {
+        this.ngOnInit();
         this.toastr.success('Estudio creado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
-        }); this.ngOnInit()
+        });
       },
       complete: () => this.modalService.dismissAll(),
       error: (e) => this.toastr.error(e.error.mensaje, 'FAIL', {

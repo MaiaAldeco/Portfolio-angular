@@ -1,21 +1,18 @@
 <app-navbar></app-navbar>
 <section class="home" id="home" ngsReveal>
     <div class="content" *ngFor="let persona of personas">
-        <ngx-typed-js stringsElement=persona.stack [shuffle]="false" [typeSpeed]="10" [startDelay]="1000" [backSpeed]="200"
+        <ngx-typed-js stringsElement=persona.tecnologia [shuffle]="false" [typeSpeed]="10" [startDelay]="1000" [backSpeed]="200"
             [smartBackspace]="true" [backDelay]="40" [loop]="true" [showCursor]="false">
-            <button *ngIf="isLogged" class="btn btn-md btn-outline-primary" (click)="open(content)">
-                <fa-icon [icon]="faUser" transform="shrink-0 left-4"></fa-icon>New User
-            </button>
             <h3>{{persona.nombre}} {{persona.apellido}} <br> {{persona.stack}} <span
                     class="typing typed">{{persona.tecnologia}}</span> Developer</h3>
         </ngx-typed-js>
         <div><button *ngIf="isLogged" class="btn btn-md btn-info" (click)="openDetails(contentDetails, persona)">
                 <fa-icon [icon]="faSearch" transform="shrink-0 left-4"></fa-icon>Details
             </button>
-            <button  *ngIf="isLogged" (click)="openEdit(contentEdit, persona)" class="btn btn-md btn-warning">
+            <button  *ngIf="isLogged && isAdmin" (click)="openEdit(contentEdit, persona)" class="btn btn-md btn-warning">
                 <fa-icon [icon]="faPenToSquare" transform="shrink-0 left-4"></fa-icon>Edit
             </button>
-            <button *ngIf="isLogged" (click)="openDelete(contentDelete, persona)" class="btn btn-md btn-danger">
+            <button *ngIf="isLogged && isAdmin" (click)="openDelete(contentDelete, persona)" class="btn btn-md btn-danger">
                 <fa-icon [icon]="faTrash" transform="shrink-0 left-4"></fa-icon>Delete
             </button>
         </div>
@@ -23,7 +20,11 @@
 </section>
 
 <section class="custom-section space " id="about" [ngsReveal]="config1reveal">
+    <button *ngIf="isLogged && isAdmin" class="btn btn-md btn-outline-primary" (click)="open(content)">
+        <fa-icon [icon]="faUser" transform="shrink-0 left-4"></fa-icon>New User
+    </button>
     <h1 class="heading"> <span>SOBRE</span> MI </h1>
+    
     <div class="row">
         <div class="profile-pic ">
             <img class="img-fluid rounded-circle shadow-sm" src="../../assets/yo.jpg" alt="">
@@ -39,6 +40,7 @@
 <!-- ---------------------------------------- ADD NEW --------------------------------------------------- -->
 <ng-template #content let-modal>
     <div class="modal-header">
+        
         <h4 class="modal-title" id="modal-basic-title">Nuevo Usuario</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
@@ -67,9 +69,21 @@
                 <div class="input-group">
                     <input type="text" id="descripcion" name="descripcion" class="form-control" required ngModel>
                 </div>
+                <label for="localidad">Localidad</label>
+                <div class="input-group">
+                    <input type="text" id="localidad" name="localidad" class="form-control" required ngModel>
+                </div>
+                <label for="telefono">Teléfono</label>
+                <div class="input-group">
+                    <input type="text" id="telefono" name="telefono" class="form-control" required ngModel>
+                </div>
+                <label for="email">Email</label>
+                <div class="input-group">
+                    <input type="text" id="email" name="email" class="form-control" required ngModel>
+                </div>
             </div>
             <div class="border text-center">
-                <button data-dismiss="modal" class="btnContent">Submit</button>
+                <button data-dismiss="modal" class="btnContent">Guardar</button>
             </div>
         </form>
     </div>
@@ -177,7 +191,7 @@
         </button>
     </div>
     <div class="modal-body">
-        <h2>Los datos no se podrán recuperar. Desea continuar?</h2>
+        <h2>Se eliminará a la persona y todos sus registros. Desea continuar?</h2>
         <div class="border text-center">
             <button (click)="onDelete()" data-dismiss="modal" class="btn btn-danger">Eliminar Usuario</button>
         </div>

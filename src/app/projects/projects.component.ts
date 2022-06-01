@@ -6,6 +6,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { faPenToSquare, faTrash, faUser, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
+import { TokenService } from '../service/token.service';
 
 @Component({
   selector: 'app-projects',
@@ -13,7 +14,6 @@ import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
   styleUrls: ['./projects.component.css']
 })
 export class ProjectsComponent implements OnInit {
-
   faPenToSquare = faPenToSquare;
   faTrash = faTrash;
   faUser = faUser;
@@ -22,11 +22,14 @@ export class ProjectsComponent implements OnInit {
   closeResult: string;
   editForm: FormGroup;
   deleteId: number;
+  isLogged = false;
+  isAdmin = false;
 
   constructor(private scrollreveal: ServiceScrollrevealService,
     private modalService: NgbModal,
     private projectService: ProjectsServiceService,
     private toastr: ToastrService,
+    private tokenService: TokenService,
     private formBuilder: FormBuilder) { }
 
   config1reveal = this.scrollreveal.config1reveal
@@ -36,8 +39,14 @@ export class ProjectsComponent implements OnInit {
     this.editForm = this.formBuilder.group({
       id: [''],
       titulo: [''],
-      descripcion: ['']
+      descripcion: [''],
+      linkTrabajo: [''],
+      imagen: ['']
     });
+    //verifica que estemos loggeados
+    this.isLogged = this.tokenService.isLogged();
+    //obtiene el rol
+    this.isAdmin = this.tokenService.isAdmin();
   }
 
   //lista
@@ -51,9 +60,10 @@ export class ProjectsComponent implements OnInit {
   onSubmit(f: NgForm) {
     this.projectService.save(f.value).subscribe({
       next: (v) => {
+        this.ngOnInit();
         this.toastr.success('Proyecto creado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
-        }); this.ngOnInit()
+        }); 
       },
       complete: () => this.modalService.dismissAll(),
       error: (e) => this.toastr.error(e.error.mensaje, 'FAIL', {
@@ -71,6 +81,8 @@ export class ProjectsComponent implements OnInit {
     });
     document.getElementById('nameProyect').setAttribute('value', proyect.titulo);
     document.getElementById('descProyect').setAttribute('value', proyect.descripcion);
+    document.getElementById('linkTrabajo').setAttribute('value', proyect.linkTrabajo);
+    document.getElementById('imagen').setAttribute('value', proyect.imagen);
   }
 
   //vista edit
@@ -83,7 +95,9 @@ export class ProjectsComponent implements OnInit {
     this.editForm.patchValue({
       id: project.id,
       titulo: project.titulo,
-      descripcion: project.descripcion
+      descripcion: project.descripcion,
+      linkTrabajo: project.linkTrabajo,
+      imagen:project.imagen
     });
   }
 
@@ -91,9 +105,10 @@ export class ProjectsComponent implements OnInit {
   onSave() {
     this.projectService.update(this.editForm.value.id, this.editForm.value).subscribe({
       next: (v) => {
+        this.ngOnInit();
         this.toastr.success('Proyecto actualizado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
-        }); this.ngOnInit()
+        }); 
       },
       complete: () => this.modalService.dismissAll(),
       error: (e) => this.toastr.error(e.error.mensaje, 'FAIL', {
@@ -139,3 +154,4 @@ export class ProjectsComponent implements OnInit {
     }
   }
 }
+

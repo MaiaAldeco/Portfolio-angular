@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { TokenService } from '../service/token.service';
 
 @Injectable({
   providedIn: 'root'
-})
+}) //NO IMPLEMENTADO. SE UTILIZA PARA EVITAR ACCESO A UNA URL CON DATOS PRIVADOS PARA EL USUARIO USER
 export class PersonaGuardService implements CanActivate{
 
   realRol:string;
@@ -15,15 +14,9 @@ export class PersonaGuardService implements CanActivate{
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean  {
     const expectedRol = route.data['expectedRol'];
-    const roles = this.tokenService.getAuthorities();
-    this.realRol = 'user';
-    roles.forEach(rol =>{
-      if(rol=='ROLE_ADMIN'){
-        this.realRol = 'admin'
-      }
-    });
-    if(!this.tokenService.getToken() || expectedRol.indexOf(this.realRol) === -1){
-      this.router.navigate(['/menu']);
+    this.realRol = this.tokenService.isAdmin()? 'admin' : 'user';
+    if(!this.tokenService.isLogged || expectedRol.indexOf(this.realRol) < 0){
+      this.router.navigate(['/']);
       return false;
     }
     return true;

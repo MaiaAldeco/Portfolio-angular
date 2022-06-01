@@ -23,7 +23,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
 import { LoginComponent } from './auth/login.component';
 import { RegistroComponent } from './auth/registro.component';
 import { MenuComponent } from './menu/menu.component';
-import { interceptorProvider } from './interceptors/persona-interceptor.service';
+import { interceptProvider } from './interceptors/persona-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -52,7 +52,7 @@ import { interceptorProvider } from './interceptors/persona-interceptor.service'
     BrowserAnimationsModule,
     ToastrModule.forRoot()
   ],
-  providers: [ServiceScrollrevealService, interceptorProvider],
+  providers: [ServiceScrollrevealService, interceptProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

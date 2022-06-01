@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Contact } from '../models/contact';
 
 @Injectable({
@@ -8,7 +9,7 @@ import { Contact } from '../models/contact';
 })
 export class ContactService {
 
-  contactURL = 'http://localhost:8080/contacto/'
+  contactURL = environment.contactURL;
 
   constructor(private httpClient: HttpClient) { }
 

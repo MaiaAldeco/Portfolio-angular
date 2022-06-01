@@ -1,9 +1,9 @@
 <app-navbar></app-navbar>
 <section class="space" id="experience" [ngsReveal]="config1reveal">
-    <div class="container-fluid">
+    <div class="container-fluid mt-md-4 py-5">
         <div class="row justify-content-md-center">
             <div class="col-md-5">
-                <button (click)="open(content)" class="btn btn-md btn-outline-primary"><fa-icon [icon]="faUser" transform="shrink-0 left-4"></fa-icon>New Experience</button>
+                <button *ngIf="isLogged && isAdmin" (click)="open(content)" class="btn btn-md btn-outline-primary"><fa-icon [icon]="faUser" transform="shrink-0 left-4"></fa-icon>New Experience</button>
                 <h3 class="exp-text">experiencia</h3>
                 <ul *ngFor="let exp of experiencias">
                     <li class="li-text">
@@ -11,18 +11,18 @@
                         {{exp.fechaFin!=null?'('+exp.fechaInicio +'/'+ exp.fechaFin+').': '(' + exp.fechaInicio +').'}}
                         {{exp.descripcion!=null?exp.descripcion+'.':exp.descripcion}}
                         <div>          
-                            <fa-icon (click)="openDetailsExp(contentDetailsExp, exp)" style="color:#0DCAF0; cursor:pointer"
+                            <fa-icon *ngIf="isLogged" (click)="openDetailsExp(contentDetailsExp, exp)" style="color:#0DCAF0; cursor:pointer"
                                 [icon]="faSearch" class="fa-1x fa-fw" transform="shrink-0 right-4"></fa-icon>
-                            <fa-icon (click)="openEditExp(contentEditExp, exp)" style="color:#F5B907; cursor:pointer"
+                            <fa-icon *ngIf="isLogged && isAdmin" (click)="openEditExp(contentEditExp, exp)" style="color:#F5B907; cursor:pointer"
                                 [icon]="faPenToSquare" transform="shrink-0 right-7" class="fa-1x fa-fw"></fa-icon>
-                            <fa-icon (click)="openDeleteExp(contentDeleteExp, exp)" style="color:#C02E3C; cursor:pointer" [icon]="faTrash"
+                            <fa-icon *ngIf="isLogged && isAdmin" (click)="openDeleteExp(contentDeleteExp, exp)" style="color:#C02E3C; cursor:pointer" [icon]="faTrash"
                                 transform="shrink-0 right-9" class="fa-1x"></fa-icon>
                         </div>
                     </li>
                 </ul>
             </div>
             <div class="col-md-5">
-                    <button (click)="open(contentEst)" class="btn btn-md btn-outline-primary">
+                    <button *ngIf="isLogged && isAdmin" (click)="open(contentEst)" class="btn btn-md btn-outline-primary">
                         <fa-icon [icon]="faUser" transform="shrink-0 left-4"></fa-icon>New Study
                     </button>
                 <h3 class="exp-text">estudios</h3>
@@ -32,11 +32,11 @@
                         {{estudio.fechaFin!=null?'('+estudio.fechaInicio +'/'+ estudio.fechaFin+').': '(' +
                         estudio.fechaInicio +').'}}
                         <div>
-                            <fa-icon (click)="openDetailsEs(contentDetailsEs, estudio)" style="color:#0DCAF0; cursor:pointer"
+                            <fa-icon *ngIf="isLogged" (click)="openDetailsEs(contentDetailsEs, estudio)" style="color:#0DCAF0; cursor:pointer"
                                 [icon]="faSearch" class="fa-1x fa-fw" transform="shrink-0 right-4"></fa-icon>
-                            <fa-icon (click)="openEditStudy(contentEditEst, estudio)" style="color:#F5B907; cursor:pointer"
+                            <fa-icon *ngIf="isLogged && isAdmin" (click)="openEditStudy(contentEditEst, estudio)" style="color:#F5B907; cursor:pointer"
                                 [icon]="faPenToSquare" transform="shrink-0 right-7" class="fa-1x fa-fw"></fa-icon>
-                            <fa-icon (click)="openDeleteStudy(contentDeleteEst, estudio)" style="color:#C02E3C; cursor:pointer" [icon]="faTrash"
+                            <fa-icon *ngIf="isLogged && isAdmin" (click)="openDeleteStudy(contentDeleteEst, estudio)" style="color:#C02E3C; cursor:pointer" [icon]="faTrash"
                                 transform="shrink-0 right-9" class="fa-1x"></fa-icon>
                         </div>
                     </li>

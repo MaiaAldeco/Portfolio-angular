@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Persona } from '../models/persona';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { TokenService } from '../service/token.service';
+import { identifierModuleUrl } from '@angular/compiler';
 
 @Component({
   selector: 'app-about-me',
@@ -24,6 +25,10 @@ export class AboutMeComponent implements OnInit {
   editForm: FormGroup;
   deleteId: number;
   isLogged = false;
+  authority: string;
+  isAdmin = false;
+  mensaje:string;
+  errorMsj:string;
 
 
   constructor(private scrollreveal: ServiceScrollrevealService,
@@ -45,12 +50,12 @@ export class AboutMeComponent implements OnInit {
       stack: [''],
       tecnologia: [''],
       descripcion: ['']
+
     });
-    if(this.tokenService.getToken()){
-      this.isLogged = true;
-    } else {
-      this.isLogged = false;
-    }
+    //verifica que estemos loggeados
+    this.isLogged = this.tokenService.isLogged();
+    //obtiene el rol
+    this.isAdmin = this.tokenService.isAdmin();
   }
 
   //lista
@@ -96,9 +101,10 @@ export class AboutMeComponent implements OnInit {
   onSave() {
     this.personaService.update(this.editForm.value.id, this.editForm.value).subscribe({
       next: (v) => {
+        this.ngOnInit();
         this.toastr.success('Persona actualizada', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
-        }); this.ngOnInit()
+        }); 
       },
       complete: () => this.modalService.dismissAll(),
       error: (e) => this.toastr.error(e.error.mensaje, 'FAIL', {
@@ -112,15 +118,16 @@ export class AboutMeComponent implements OnInit {
   onSubmit(f: NgForm) {
     this.personaService.save(f.value).subscribe({
       next: (v) => {
+        this.ngOnInit(),
         this.toastr.success('Persona creada', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
-        }); this.ngOnInit()
+        }); 
       },
       complete: () => this.modalService.dismissAll(),
-      error: (e) => this.toastr.error(e.error.mensaje, 'FAIL', {
+      error: (e) => { this.toastr.error(e.error.mensaje, 'FAIL', {
         timeOut: 3000, positionClass: 'toast-top-center'
       })
-    })
+    }})
   }
 
   //vista delete
@@ -136,9 +143,10 @@ export class AboutMeComponent implements OnInit {
   onDelete() {
     this.personaService.delete(this.deleteId).subscribe({
       next: (v) => {
+        this.ngOnInit();
         this.toastr.success('Persona creada', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
-        }); this.ngOnInit()
+        }); 
       },
       complete: () => this.modalService.dismissAll(),
       error: (e) => this.toastr.error(e.error.mensaje, 'FAIL', {
